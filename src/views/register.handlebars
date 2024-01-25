@@ -1,0 +1,17 @@
+<div class="container">
+    {{>menubar}}
+    <div style="width: 50%; border:solid;border-radius:5px; padding:2rem;">
+    <h2>Registro de Usuario</h2>
+    <form action="/api/sessions/register" method="post">
+        <label for="email">Firs Name</label><input name="first_name" type="text" class="form-control" />
+        <label for="email">Last Name</label><input name="last_name" type="text" class="form-control" />
+        <label for="email">Edad</label><input name="age" type="number" class="form-control"/>
+        <label for="email">Email</label><input name="email" type="email" class="form-control"/>
+        <label for="password">Password</label><input name="password" type="password" class="form-control"/>
+        <button class="btn btn-primary" type="submit" class="form-control" style="margin-top: 5px;">Register</button>
+
+
+
+    </form>
+    </div>
+</div> 

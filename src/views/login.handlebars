@@ -1,0 +1,14 @@
+<div class="container">
+    {{>menubar}}
+    <div style="width: 40%; border:solid;border-radius:5px; padding:2rem;">
+    <h2 class="h2" style="color:blue;">Login</h2>
+    <form action="/api/sessions/login" method="post" class="form">
+        <label for="email">Email</label><input name="email" type="email" class="form-control"/>
+        <label for="password">Password</label><input name="password" type="password" class="form-control"/>
+        <button class="btn btn-primary" type="submit" class="form-control" style="margin-top: 5px;">Login</button>
+         <button class="btn btn-secondary" type="button"><a href="/views/restaurarpass"> Restaurar Contraseña</a></button>
+
+
+    </form>
+    </div>
+</div> 

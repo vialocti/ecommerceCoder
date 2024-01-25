@@ -1,0 +1,32 @@
+<div class="container">
+    {{>menubar}}
+    <h4>Bienvenido :{{nameuser}}</h4>
+<h2>List Products</h2>
+{{#if hasPrevPage}}
+<button class="btnNv"><a href="/views/products?page={{prevPage}}">Pag. Anterior</a></button>
+{{/if}}
+
+{{#if hasNextPage}}
+<button class="btnNv"><a href="/views/products?page={{nextPage}}">Pag. Siguiente</a></button>
+{{/if}}
+<hr/>
+{{#each products.docs}}
+    <div class="product-item">
+        <p>Id: <strong>{{this._id}}</strong></p>
+        <p>Title: <strong>{{this.title}}</strong></p>
+        <p>Description:<strong> {{this.description}}</strong></p>
+        <p>Code: <strong>{{this.code}}</strong></p>
+        <p>Price: <strong>{{this.price}}</strong></p>
+        <p>Stock: <strong>{{this.stock}}</strong></p>
+        <p>Category:<strong>{{this.category}}</strong></p>
+        <p>Status: <strong>{{this.status}}</strong></p>
+
+        <button class="btnP" id="{{this._id}}">Agregar al Carrito</button> 
+    </div>
+<br/>
+{{/each}}
+
+
+
+</div>
+<script src="/js/products.js"></script>

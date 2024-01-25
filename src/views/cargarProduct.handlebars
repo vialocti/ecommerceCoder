@@ -1,0 +1,79 @@
+<div class="container">
+    {{>menubar}}
+    
+    <div class="row">
+   
+    <div class="col-md-3"></div>
+    <div class="col-md-6 p-4">
+
+
+      <div style="border:solid;border-radius:5px; padding:2rem;">
+        <form action="/api/products" method="post" enctype="multipart/form-data">
+        
+            <h3>Carga de Producto</h3>
+        
+            <label for="title">Titulo</label>
+            <input class="form-control"
+                id="title"
+                name="title"
+                type="text"
+            />
+            
+         
+            <label for="description">Descripcion</label>
+            <input class="form-control"
+                id="description"
+                name="description"
+                type="text"
+            />
+        
+        
+            <label for="code">Codigo</label>
+            <input class="form-control"
+                name="code"
+                type="text"
+            />
+            
+        
+            <label for="price">Precio</label>
+            <input class="form-control"
+                name="price"
+                type="number" 
+            />
+       
+        
+            <label for="stock">Stock</label>
+            <input class="form-control"
+                name="stock"
+                type="number" 
+            />
+            
+       
+            <label for="category">Categoria</label> 
+            <select  class="form-control" name="category">
+                <option value="MALBEC">MALBEC</option>
+                <option value="CABERNET">CABERNET</option>
+                <option value="SYRAH">SYRAH</option>
+                <option value="BONARDA">BONARDA</option>
+                <option value="MERLOT">MERLOT</option>
+            </select>
+        
+            <br/>
+            <label for="thumbnails">Imagenes producto</label>
+            <input class="form-control"
+                name="file"
+                type="file" 
+            />
+        
+      
+            <button  type="submit"  class="btn btn-primary mt-2" id="btn">Ingresar Nuevo Producto</button>
+        
+        </form>
+    </div>
+    </div>
+    <div class="col-md-3 p-4">
+
+        
+    </div>
+    </div>
+    </div>

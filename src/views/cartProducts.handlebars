@@ -1,0 +1,29 @@
+<div class="container">
+    {{>menubar}}
+<h1>Productos en Carrito</h1>
+{{#if cantidad}}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Precio Un.</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+    {{#each productsCart}}
+        <tr>
+            <td>{{this.product.title}}</td> 
+            <td>{{this.product.description}}</td>
+            <td>{{this.product.price}}</td>
+            <td> {{this.quantity}}</td>
+        </tr>    
+    {{/each}}
+    </tbody>
+    </table>
+{{else}}
+<h3>Sin productos en el carrito</h3>
+{{/if}}
+
+</div>
