@@ -62,10 +62,7 @@ app.use('/api/products', productsRoutes)
 app.use('/api/sessions', sessionsRoutes)
 app.use('/views',viewsRoutes)
 
-
-
-
-//
+//coneccion de db mongo
 mongoose.connect('mongodb+srv://api-directo:FTtayuVRLQw3y70i@cluster0.7tefz.mongodb.net/ecommerce?retryWrites=true&w=majority')
 .then(()=>{console.log('Connect to MongoAtlas')})
 .catch(error=>{console.log(error)})
