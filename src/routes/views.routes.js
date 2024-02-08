@@ -8,7 +8,9 @@ const viewsRoutes=Router();
 
   //ir al home
   viewsRoutes.get('/', (req,res)=>{
-    res.render('home')
+    const user = req.session.user
+   
+    res.render('home', user)
   })
 
    //cargar productos

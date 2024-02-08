@@ -1,12 +1,12 @@
 import {Router}from 'express';
 import { userModel } from '../models/users.models.js';
-import { createHash} from '../utils/bcrypt.js';
+import { createHash} from '../config/bcrypt.js';
 import passport from 'passport';
 
 const sessionsRoutes=Router()
 
 sessionsRoutes.post('/register',passport.authenticate('register',{failureMessage:'/api/sessions/failregister'}), async(req, res)=>{
-    return res.status(201).send({message:'registrado'});
+    return  res.redirect("http://localhost:8080/views/login")
 });
 
 //falla registro
@@ -17,7 +17,8 @@ sessionsRoutes.get('/failregister',(req,res)=>{
 
 sessionsRoutes.post('/login',passport.authenticate('login',{failureRedirect:'/api/sessions/failLogin'}), async (req,res)=>{
     if(!req.user){
-        return res.status(400).send({message:"error login credenciales"})
+        return  res.redirect("http://localhost:8080/views/login")
+        //return res.status(400).send({message:"error login credenciales"})
     }
     
     req.session.user={
@@ -33,7 +34,7 @@ sessionsRoutes.post('/login',passport.authenticate('login',{failureRedirect:'/ap
 
 //falla login
 sessionsRoutes.get('/failLogin',(req,res)=>{
-    return res.status(400).send({message:'fail to login'})
+    return  res.redirect("http://localhost:8080/views/login")
 })
 
 

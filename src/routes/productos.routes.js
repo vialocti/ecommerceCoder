@@ -1,6 +1,6 @@
 import {Router}from 'express';
 import { ProductsManager } from '../clases/ProductsManager.js';
-import { uploader } from '../utils/multer.js';
+import { uploader } from '../config/multer.js';
 
 const productsRoutes=Router()
 

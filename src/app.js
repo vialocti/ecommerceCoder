@@ -10,6 +10,7 @@ import cartsRoutes from './routes/carts.routes.js'
 import productsRoutes from './routes/productos.routes.js'
 import viewsRoutes from './routes/views.routes.js'
 import sessionsRoutes from './routes/sessions.routes.js'
+import { mongourl, secretSession } from './utils/constants.js'
 
 //set
 const PORT=8080
@@ -18,10 +19,10 @@ const app=express() //inicializamos app de tipo express
 //session
 
 app.use(session({
-    secret:'P6puGom4z',
+    secret:secretSession,
     //store:new fileStore({path:'./sessions', ttl:30, retries:0}),
     store:MongoStore.create({
-        mongoUrl:'mongodb+srv://api-directo:FTtayuVRLQw3y70i@cluster0.7tefz.mongodb.net/ecommerce?retryWrites=true&w=majority',
+        mongoUrl:mongourl,
         ttl:60 * 60 //una hora
     }),
     resave:true,
@@ -42,7 +43,7 @@ app.use(express.urlencoded({extended:true}))//
 
 
 
-//handlerbar-mongo
+//handlerbars-mongo
 const hbs=handlebars.create({
     runtimeOptions:{
         allowProtoPropertiesByDefault:true
@@ -63,7 +64,7 @@ app.use('/api/sessions', sessionsRoutes)
 app.use('/views',viewsRoutes)
 
 //coneccion de db mongo
-mongoose.connect('mongodb+srv://api-directo:FTtayuVRLQw3y70i@cluster0.7tefz.mongodb.net/ecommerce?retryWrites=true&w=majority')
+mongoose.connect(mongourl)
 .then(()=>{console.log('Connect to MongoAtlas')})
 .catch(error=>{console.log(error)})
 
@@ -73,4 +74,3 @@ app.listen(PORT, ()=>{
     console.log(`Server runnig in port ${PORT}`)
 })
 
-//https://github.com/vialocti/ecommerceCoder.git

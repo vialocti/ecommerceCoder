@@ -1,4 +1,4 @@
-import bcrypt, { genSalt } from 'bcrypt'
+import bcrypt from 'bcrypt'
 
 
 export const createHash =(password)=>{

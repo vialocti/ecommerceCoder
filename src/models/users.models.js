@@ -28,7 +28,12 @@ const userSchema=mongoose.Schema({
     rol:{
         type:String,
         required:true,
-        default:'usuario'
+        default:'user'
+    },
+    cart:{
+        type:mongoose.Schema.ObjectId,
+        ref:'carts',
+        default:null
     }
 
 });

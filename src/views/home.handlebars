@@ -1,5 +1,9 @@
 <div class="container">
   {{>menubar}}
-    <h1>Home Page :Ecommerce Coder</h1>
+    {{#if email}}
+    <h5>Bienvenido:<strong>{{first_name}}</strong>, Email:<strong>{{email}}</strong></h5>
+    {{/if}}
+    <h2>Ecommerce Coder</h2>
+  
   </div>
 

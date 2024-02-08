@@ -1,8 +1,8 @@
 import passport from "passport";
 import local from 'passport-local'
 import { userModel } from "../models/users.models.js";
-import { createHash, isValidPassword } from "../utils/bcrypt.js";
-import { Strategy as GitHubStrategy } from "passport-github2";
+import { createHash, isValidPassword } from "./bcrypt.js";
+//import { Strategy as GitHubStrategy } from "passport-github2";
 
 const localStrategy = local.Strategy
 
@@ -56,7 +56,7 @@ const initializePassport=()=>{
 
         } catch (error) {
             console.log(error)
-            done(error)
+            return done(error)
         }
        }
 
@@ -65,6 +65,7 @@ const initializePassport=()=>{
 
     
      //gitHub login
+     /*
      passport.use('github', new GitHubStrategy({
         clientID:'Iv1.4a7e8a53b9669182',
         callbackURL:'http://localhost:8080/api/sessions/githubacallback',
@@ -92,7 +93,7 @@ const initializePassport=()=>{
         }
     }
     ));
-
+*/
 
 //serializacion deserializacion
 
