@@ -1,4 +1,5 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import handlebars from 'express-handlebars'
 import mongoose from 'mongoose'
 import session from 'express-session'
@@ -10,19 +11,21 @@ import cartsRoutes from './routes/carts.routes.js'
 import productsRoutes from './routes/productos.routes.js'
 import viewsRoutes from './routes/views.routes.js'
 import sessionsRoutes from './routes/sessions.routes.js'
-import { mongourl, secretSession } from './utils/constants.js'
+//import { mongourl, secretSession } from './utils/constants.js'
 
+
+dotenv.config()
 //set
-const PORT=8080
+const PORT=process.env.PORT || 8081
 const app=express() //inicializamos app de tipo express
 
 //session
 
 app.use(session({
-    secret:secretSession,
+    secret:process.env.secretSession,
     //store:new fileStore({path:'./sessions', ttl:30, retries:0}),
     store:MongoStore.create({
-        mongoUrl:mongourl,
+        mongoUrl:process.env.mongoURL,
         ttl:60 * 60 //una hora
     }),
     resave:true,
@@ -64,7 +67,7 @@ app.use('/api/sessions', sessionsRoutes)
 app.use('/views',viewsRoutes)
 
 //coneccion de db mongo
-mongoose.connect(mongourl)
+mongoose.connect(process.env.mongoURL)
 .then(()=>{console.log('Connect to MongoAtlas')})
 .catch(error=>{console.log(error)})
 

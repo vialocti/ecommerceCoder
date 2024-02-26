@@ -17,7 +17,7 @@ botoncp.addEventListener('click',()=>{
 })
 
 botonmp.addEventListener('click',()=>{
-    location.href="http://localhost:8080/views/products";
+    location.href="http://localhost:8080/views/products?page=1";
 })
 
 botonrgter.addEventListener('click',()=>{

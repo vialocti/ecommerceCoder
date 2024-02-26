@@ -2,12 +2,12 @@
     {{>menubar}}
     <h4>Bienvenido :{{nameuser}}</h4>
 <h2>List Products</h2>
-{{#if hasPrevPage}}
-<button class="btnNv"><a href="/views/products?page={{prevPage}}">Pag. Anterior</a></button>
+{{#if products.hasPrevPage}}
+<button class="btnNv"><a href="/views/products?page={{products.prevPage}}">Pag. Anterior</a></button>
 {{/if}}
 
-{{#if hasNextPage}}
-<button class="btnNv"><a href="/views/products?page={{nextPage}}">Pag. Siguiente</a></button>
+{{#if products.hasNextPage}}
+<button class="btnNv"><a href="/views/products?page={{products.nextPage}}">Pag. Siguiente</a></button>
 {{/if}}
 <hr/>
 {{#each products.docs}}
