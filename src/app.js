@@ -1,5 +1,5 @@
 import express from 'express'
-import dotenv from 'dotenv'
+
 import handlebars from 'express-handlebars'
 import mongoose from 'mongoose'
 import session from 'express-session'
@@ -11,21 +11,28 @@ import cartsRoutes from './routes/carts.routes.js'
 import productsRoutes from './routes/productos.routes.js'
 import viewsRoutes from './routes/views.routes.js'
 import sessionsRoutes from './routes/sessions.routes.js'
-//import { mongourl, secretSession } from './utils/constants.js'
+import { Command } from 'commander'
+import { getVaribles } from './config/config.js'
 
 
-dotenv.config()
+//options de linea de comando
+const program = new Command()
+
+program.option('--mode <mode>','modo de trabajo', 'production')
+const options = program.parse()
+const { PORT, mongoURL, tokenSecret }= getVaribles(options)
+
 //set
-const PORT=process.env.PORT || 8081
+const port=PORT || 8081
 const app=express() //inicializamos app de tipo express
 
 //session
 
 app.use(session({
-    secret:process.env.secretSession,
+    secret:tokenSecret,
     //store:new fileStore({path:'./sessions', ttl:30, retries:0}),
     store:MongoStore.create({
-        mongoUrl:process.env.mongoURL,
+        mongoUrl:mongoURL,
         ttl:60 * 60 //una hora
     }),
     resave:true,
@@ -67,13 +74,13 @@ app.use('/api/sessions', sessionsRoutes)
 app.use('/views',viewsRoutes)
 
 //coneccion de db mongo
-mongoose.connect(process.env.mongoURL)
+mongoose.connect(mongoURL)
 .then(()=>{console.log('Connect to MongoAtlas')})
 .catch(error=>{console.log(error)})
 
 
 //ponemos el servidor a escuchar por el puerto 8080
 app.listen(PORT, ()=>{
-    console.log(`Server runnig in port ${PORT}`)
+    console.log(`Server runnig in port ${port}`)
 })
 

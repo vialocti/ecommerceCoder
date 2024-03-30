@@ -4,6 +4,7 @@ import {
   addProductoToCart,
   deleteAllProductsToCart,
   deleteProductToCart,
+  endPurchase,
   getProductosToCart,
   updateProducts,
   updateQuantityProduct,
@@ -31,4 +32,5 @@ cartsRoutes.put("/:idC", updateProducts);
 //actualizar cantidad de ejemplares de un producto
 cartsRoutes.put("/:idC/products/:idP/:quantity", updateQuantityProduct);
 
+cartsRoutes.get("/:idC/:purchase", endPurchase )
 export default cartsRoutes;

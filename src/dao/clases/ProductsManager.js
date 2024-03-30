@@ -4,7 +4,7 @@ export class ProductsManager{ //clase de admnitracion de productos
     constructor(){};
 
     //buscar productos usando query params paginar limit filtros y order 
-    async getProducts(limit=10, page=1, query='', sort=''){
+    async getAll(limit=10, page=1, query='', sort=''){
         
 
         //console.log(limit, page,query,sort)
@@ -25,9 +25,9 @@ export class ProductsManager{ //clase de admnitracion de productos
 
     //buscar producto por id
 
-    async getProductById(idP){
+    async getById(pID){
         try {
-            const resultado = await productsModel.findOne({_id:idP})
+            const resultado = await productsModel.findOne({_id:pID})
             return resultado
         } catch (error) {
             console.log(error)
@@ -38,11 +38,11 @@ export class ProductsManager{ //clase de admnitracion de productos
 
 
     //agregar un producto 
-    async addProduct(newProduct){
+    async saveProduct(product){
         
         
         try {
-            const resu = await productsModel.create(newProduct)
+            const resu = await productsModel.create(product)
             return resu            
         } catch (error) {
             console.log(error)
@@ -52,11 +52,11 @@ export class ProductsManager{ //clase de admnitracion de productos
 
 
     //eliminar un producto de la base de datos
-    async deleteProduct(idP){
+    async delById(pID){
         
         
         try {
-            const resu = await productsModel.deleteOne({_id:idP})
+            const resu = await productsModel.deleteOne({_id:pID})
             return resu
         } catch (error) {
             console.log(error)
@@ -66,10 +66,10 @@ export class ProductsManager{ //clase de admnitracion de productos
 
 
     //modificar datos de producto
-    async updateProduct(idP, datosUd){
+    async updteById(pID, product){
         
         try {
-           const result = await productsModel.updateOne({_id:idP}, datosUd)
+           const result = await productsModel.updateOne({_id:pID}, product)
            return result    
         } catch (error) {
             console.log(error)

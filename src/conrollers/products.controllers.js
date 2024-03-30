@@ -1,13 +1,12 @@
-import { ProductsManager } from "../dao/clases/ProductsManager.js";
-
+import ProductDTO from "../dao/dto/products.dto.js";
+import { productService } from "../dao/repositories/services.js";
 
 //traer todos los productos
 export const getProducts = async (req, res) => {
   const { limit = 10, page = 1, query = "", sort = "" } = req.query;
 
-  const PManager = new ProductsManager();
   try {
-    const result = await PManager.getProducts(limit, page, query, sort);
+    const result = await productService.getProducts(limit, page, query, sort);
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -17,11 +16,10 @@ export const getProducts = async (req, res) => {
 
 ///buscar producto por Id
 export const getProductoById = async (req, res) => {
-  const { pId } = req.params;
-  const PManager = new ProductsManager(); //instancia de la clase
+  const { pID } = req.params;
 
   try {
-    const product = await PManager.getProductById(pId);
+    const product = await productService.getProductById(pID);
 
     if (!product) {
       res.send({
@@ -39,46 +37,30 @@ export const getProductoById = async (req, res) => {
 //adicionar producto
 
 export const addProduct = async (req, res) => {
-  const newP = req.body;
-  const PManager = new ProductsManager();
+  const product = ProductDTO(req.body);
 
-  let path = "";
-  if (req.file) {
-    path = req.file.path.split("public").join("");
-  } else {
-    path = "sin imagen";
-  }
-  //console.log(path)
-
-  if (
-    !newP.title ||
-    !newP.description ||
-    !newP.code ||
-    !newP.price ||
-    !newP.stock
-  ) {
-    return res.send({ message: "datos incompletos" });
-  }
-  //console.log(newP)
-  //return
+   
   try {
-    const resu = await PManager.addProduct({ ...newP, thumbnails: path });
-    //console.log(resu)
-    res.status(201).send({ msg: "grabado Ok" });
+    const resu = await productService.createProduct(product);
+    if(resu.message='OK'){
+    return res.status(201).send({ msg: "grabado Ok" });
+    }else{
+      res.statsu(400).send({message:resu})
+    }
   } catch (error) {
-    console.log(error);
-    res.send({ msg: "error grabacion" });
+    
+    res.status(400).send({ message: error });
   }
 };
 
 //modificar producto
 
 export const updateProduct = async (req, res) => {
-  const { idP } = req.params;
-  const datosUd = req.body;
-  const PManager = new ProductsManager();
+  const { pID } = req.params;
+  const product = req.body;
+
   try {
-    const resu = await PManager.updateProduct(idP, datosUd);
+    const resu = await productService.updateProductById(pID, product);
     res.send({ msg: "OK Update" });
   } catch (error) {
     console.log(error);

@@ -6,10 +6,10 @@ export class CartsManager{
     constructor(){}
     
     //crear un nuevo carrito 
-    async addCart(newC){
+    async saveCart(cart){
         
         try {
-            const resu=await cartsModel.create(newC)
+            const resu=await cartsModel.create(cart)
             return resu   
         } catch (error) {
             console.log(error)
@@ -20,28 +20,28 @@ export class CartsManager{
     //agregar un producto al carrito con una cantidad determinada
     //o modifico la cantidad de un producto existente
 
-    async addProductCart(idC, idP, newQuantity){
+    async saveProductCart(cID, pID, quantity){
         
        
         try {
-            const cart = await cartsModel.findOne({_id:idC})
+            const cart = await cartsModel.findOne({_id:cID})
             let newcarga
-            newcarga = cart.products.find((elemento)=>elemento.product.toString()===idP)
+            newcarga = cart.products.find((elemento)=>elemento.product.toString()===pID)
             //console.log(newcarga)
             if(!newcarga){
                //producto no existente en el carrito
-                cart.products.push({product:idP,quantity:newQuantity})
+                cart.products.push({product:pID,quantity:quantity})
                                
             }else{
                 //si el producto existe modifica cantidades
                 let productsN=[]
-                productsN=cart.products.filter((elemento)=>elemento.product.toString()!==idP)
-                newcarga.quantity+=+newQuantity
+                productsN=cart.products.filter((elemento)=>elemento.product.toString()!==pID)
+                newcarga.quantity+=+quantity
                 productsN.push(newcarga)
                 cart.products=productsN
                 
             }
-            const resu= await cartsModel.updateOne({_id:idC},cart)
+            const resu= await cartsModel.updateOne({_id:cID},cart)
            
             return resu
         } catch (error) {
@@ -53,11 +53,11 @@ export class CartsManager{
 
     //ver productos de un carrito
 
-    async getProductsCart(idC){
+    async getProductsToCart(cID){
         
         
         try {
-            const cart=await cartsModel.findOne({_id:idC}).populate('products.product')
+            const cart=await cartsModel.findOne({_id:cID}).populate('products.product')
             return cart.products
         } catch (error) {
             console.log(error)
@@ -67,22 +67,14 @@ export class CartsManager{
 
     //eliminar un producto del carrito
     
-    async deleteProductCart(idC, idP){
+    async deleteProductToCart(cID, pID){
            
-         //console.log(idC)
+         
         try {
        
-        /* a lo gaucho
-        const cart = await cartsModel.findOne({_id:idC})
-        
-        let productsNew = cart.products.filter((item)=>item.product.toString()!==idP)
-        cart.products = productsNew
-        const resu = await cartsModel.updateOne({_id:idC},cart)
-        */
-        
-        //elegante
-        const result = await cartsModel.updateOne({_id:idC},{
-            $pull:{products:{product:new mongoose.Types.ObjectId(idP)}} 
+       
+        const result = await cartsModel.updateOne({_id:cID},{
+            $pull:{products:{product:new mongoose.Types.ObjectId(pID)}} 
             })
         if(result.modifiedCount>0){ return true}else{return false}
         } catch (error) {
@@ -92,12 +84,12 @@ export class CartsManager{
     }
 
     //vaciar el carrito
-    async deleteAllProductCart(idC){
+    async deleteProductsCart(cID){
         
         try {
-            const cart = await cartsModel.findOne({_id:idC})
+            const cart = await cartsModel.findOne({_id:cID})
             cart.products=[]
-            const resu = await cartsModel.updateOne({_id:idC}, cart)
+            const resu = await cartsModel.updateOne({_id:cID}, cart)
             return resu 
         } catch (error) {
             console.log(error)
@@ -107,10 +99,10 @@ export class CartsManager{
     
     //update carts all products
 
-    async updateCart(idC, cart){
+    async updateCart(cID, cart){
         
         try {
-            const result = await cartsModel.updateOne({_id:idC}, cart) 
+            const result = await cartsModel.updateOne({_id:cID}, cart) 
             if(result.modifiedCount > 0){
                 return true
             }else{
@@ -125,18 +117,18 @@ export class CartsManager{
     }
 
     //update de un producto
-    async updateProductinCart(idC, idP, quantity){
+    async updateProductToCart(cID, pID, quantity){
         
         if(!quantity){
             return false
         }
 
         try {
-            const cart = await cartsModel.findOne({_id:idC})
+            const cart = await cartsModel.findOne({_id:cID})
             if(!cart){
                 return false
             }
-            const product = cart.products.find(product=>product.product.toString()===idP)
+            const product = cart.products.find(product=>product.product.toString()===pID)
             if(!product){
                 return false
             }
@@ -150,3 +142,4 @@ export class CartsManager{
     }
 
 }
+

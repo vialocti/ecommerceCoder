@@ -1,10 +1,11 @@
-import { CartsManager } from "../dao/clases/CartsManager.js"
+//import { CartsManager } from "../dao/clases/CartsManager.js"
+import { cartService } from "../dao/repositories/services";
 
 export const addCart = async (req, res) => {
-  const newC = req.body;
-  const CManager = new CartsManager();
+  const cart = req.body;
+  
   try {
-    const result = await CManager.addCart(newC);
+    const result = await cartService.createCart(cart);
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -13,11 +14,11 @@ export const addCart = async (req, res) => {
 
 //ver productos de un carrito
 export const getProductosToCart = async (req, res) => {
-  const { idC } = req.params;
-  const CManager = new CartsManager();
+  const { cID } = req.params;
+  
 
   try {
-    const products = await CManager.getProductsCart(idC);
+    const products = await cartService.findAllProductCart(cID);
     res.send(products);
   } catch (error) {
     console.log(error);
@@ -27,13 +28,13 @@ export const getProductosToCart = async (req, res) => {
 
 //agregar producto a carrito
 export const addProductoToCart = async (req, res) => {
-  const { idC, idP } = req.params;
-  const newQuantity = req.body.quantity;
+  const { cID, pID } = req.params;
+  const quantity = req.body.quantity;
 
-  const CManager = new CartsManager();
+  
 
   try {
-    const result = await CManager.addProductCart(idC, idP, newQuantity);
+    const result = await cartService.addProductInCart(cID, pID, quantity);
     //console.log(result)
     if (result.modifiedCount > 0) {
       return res
@@ -49,11 +50,11 @@ export const addProductoToCart = async (req, res) => {
 //borrar un producto
 
 export const deleteProductToCart = async (req, res) => {
-  const { idC, idP } = req.params;
+  const { cID, pID } = req.params;
 
-  const CManager = new CartsManager();
+  
   try {
-    const result = await CManager.deleteProductCart(idC, idP);
+    const result = await cartService.deleteOneProducToCart(cID, pID);
     if (result) {
       res.send({ msg: "producto eliminado" });
     } else {
@@ -66,10 +67,10 @@ export const deleteProductToCart = async (req, res) => {
 
 //borrar todos los productos de un carrito
 export const deleteAllProductsToCart = async (req, res) => {
-  const { idC } = req.params;
-  const CManager = new CartsManager();
+  const { cID } = req.params;
+  
   try {
-    const result = await CManager.deleteAllProductCart(idC);
+    const result = await cartService.deleteAllProducsToCart(cID);
     res.send({ msg: "borrados all " });
   } catch (error) {
     console.log(error);
@@ -78,12 +79,12 @@ export const deleteAllProductsToCart = async (req, res) => {
 
 ///actualizar productos
 export const updateProducts = async (req, res) => {
-  const { idC } = req.params;
+  const { cID } = req.params;
   const cart = req.body;
 
-  const CManager = new CartsManager();
+  
   try {
-    const result = await CManager.updateCart(idC, cart);
+    const result = await cartService.updateDataCart(cID, cart);
 
     if (result) {
       res.send({ msg: "se actualizo el carrito" });
@@ -99,10 +100,10 @@ export const updateProducts = async (req, res) => {
 ///actualizar cantidad de ejemplares
 
 export const updateQuantityProduct = async (req, res) => {
-  const { idC, idP, quantity } = req.params;
-  const CManager = new CartsManager();
+  const { cID, pID, quantity } = req.params;
+  
   try {
-    const result = await CManager.updateProductinCart(idC, idP, quantity);
+    const result = await cartService.updateQuantityProductToCart(cID, pID, quantity);
     if (result) {
       res.send({ msg: "Producto Actualizado" });
     } else {
@@ -112,3 +113,7 @@ export const updateQuantityProduct = async (req, res) => {
     res.status(400).send({ msg: "error al actualizar producto" });
   }
 };
+
+export const endPurchase=async(req,res)=>{
+  
+}

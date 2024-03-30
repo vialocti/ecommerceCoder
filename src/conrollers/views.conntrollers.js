@@ -1,5 +1,5 @@
 import { CartsManager } from "../dao/clases/CartsManager.js"
-import { ProductsManager } from "../dao/clases/ProductsManager.js"
+import { productService } from "../dao/repositories/services.js"
 
 
 
@@ -50,9 +50,9 @@ export const viewsProducts =async(req,res)=>{
  
     const nameuser=first_name + ' '+ last_name
    
-    const PManager = new ProductsManager()
+    
     try {
-        const products = await PManager.getProducts(3,page)
+        const products = await productService.getProducts(3,page)
         //console.log(products)
         if(products){
            return res.render('products',{ products, nameuser})
